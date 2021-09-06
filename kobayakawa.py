@@ -6,9 +6,9 @@ from discord.abc import User
 from discord.enums import Status
 from discord.ext import commands
 from game_data import Game_data, active_game
-from start_round import start_round
+from start_round import notify_turn, start_round
 from ready_game import ready_game
-from change import change_hand, change_support_card
+from change import *
 
 token = open("token.txt",
              'r').read()
@@ -73,6 +73,7 @@ async def 마감(ctx):
     else:
         await ctx.send("현재 진행중인 게임이 없습니다.")
 
+@bot.event
 async def on_raw_reaction_add(payload):
     current_game = None
     for channel_id in active_game:
@@ -85,9 +86,13 @@ async def on_raw_reaction_add(payload):
     current_round = current_game.round_info
     if payload.user_id == current_round.turn.id:
         if str(payload.emoji) == "0\u20E3":
-            change_hand(current_round)
+            await draw_hand(current_round)
         elif str(payload.emoji) == "1\u20E3":
-            change_support_card(current_round)
+            await draw_support_card(current_round)
             await current_game.main_channel.send(f"코바야카와 카드가 {current_round.support_card}로 변경되었습니다.")
+        elif str(payload.emoji) == "⭕":
+            await change_hand(current_round)
+        elif str(payload.emoji) == "❌":
+            await keep_hand(current_round)
 
 bot.run(token)

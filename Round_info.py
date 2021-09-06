@@ -29,7 +29,7 @@ class Round_info:
     
     def set_first_player(self, game_room):
         first_player = game_room.members[game_room.index_of_first_player]
-        game_room.index_of_first_player += 1
+        game_room.index_of_first_player = (game_room.index_of_first_player + 1) % len(game_room.members)
         while game_room.members[game_room.index_of_first_player] not in self.survivors:
             game_room.index_of_first_player = (game_room.index_of_first_player + 1) % len(game_room.members)
         return first_player

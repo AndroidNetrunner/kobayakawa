@@ -16,7 +16,7 @@ async def start_round(game_room):
     await game_room.main_channel.send(f"현재 {current_round.turn.name}님의 차례입니다.")
 
 async def notify_turn(current_round):
-    embed = discord.Embed(title=f"이제 당신의 차례입니다!",description=f"본인의 카드를 교체하거나, 코바야카와 카드를 교체할 수 있습니다.")
+    embed = discord.Embed(title=f"이제 당신의 차례입니다!",description=f"본인의 카드를 교체하거나, 코바야카와 카드(현재 숫자: {current_round.support_card})를 교체할 수 있습니다.")
     embed.add_field(name="본인의 카드를 교체하고 싶다면,", value=f"0\u20E3을 눌러주세요! 새로운 카드가 지급된 후, 본인의 카드를 결정하시면 됩니다.", inline=False)
     embed.add_field(name="코바야카와 카드를 교체하고 싶다면,", value=f"1\u20E3을 눌러주세요! 코바야카와 카드가 바뀐 후 모두에게 공유됩니다.")
     message = await current_round.turn.send(embed=embed)
