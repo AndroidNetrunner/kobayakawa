@@ -2,8 +2,6 @@ from start_round import notify_turn
 from bet import start_bet
 import discord
 
-
-
 async def next_process(current_round):
     current_round.next_turn()
     if current_round.turn != current_round.first_player:
@@ -26,14 +24,12 @@ async def draw_support_card(current_round):
     await next_process(current_round)
 
 async def change_hand(current_round):
-    current_round.hand[current_round.turn] = current_round.temp_card
-    current_round.temp_card = None
+    current_round.hand[current_round.turn], current_round.temp_card = current_round.temp_card, current_round.hand[current_round.turn]
     embed = discord.Embed(title="새로 뽑은 카드로 손패를 교체하였습니다.", description=f"현재 당신의 손패는 {current_round.hand[current_round.turn]}입니다.")
     await current_round.turn.send(embed=embed)
     await next_process(current_round)
 
 async def keep_hand(current_round):
     embed = discord.Embed(title="기존 손패를 계속 유지하였습니다.", description=f"현재 당신의 손패는 {current_round.hand[current_round.turn]}입니다.")
-    current_round.temp_card = None
     await current_round.turn.send(embed=embed)
     await next_process(current_round)

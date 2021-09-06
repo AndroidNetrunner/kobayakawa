@@ -1,6 +1,7 @@
 import asyncio
 import discord
 import random
+import emoji
 from discord import activity
 from discord.abc import User
 from discord.enums import Status
@@ -9,6 +10,7 @@ from game_data import Game_data, active_game
 from start_round import notify_turn, start_round
 from ready_game import ready_game
 from change import *
+from bet import call, fold
 
 token = open("token.txt",
              'r').read()
@@ -87,12 +89,20 @@ async def on_raw_reaction_add(payload):
     if payload.user_id == current_round.turn.id:
         if str(payload.emoji) == "0\u20E3":
             await draw_hand(current_round)
+            await current_game.main_channel.send(f"{current_round.turn.name}님이 덱에서 카드를 가져왔습니다.")
         elif str(payload.emoji) == "1\u20E3":
             await draw_support_card(current_round)
-            await current_game.main_channel.send(f"코바야카와 카드가 {current_round.support_card}로 변경되었습니다.")
+            await current_game.main_channel.send(f"{current_round.turn.name}님이 코바야카와 카드를 {current_round.support_card}로 변경하였습니다.")
         elif str(payload.emoji) == "⭕":
+            await current_game.main_channel.send(f"{current_round.turn.name}님은 {current_round.hand[current_round.turn]} 카드를 버렸습니다.")
             await change_hand(current_round)
         elif str(payload.emoji) == "❌":
+            await current_game.main_channel.send(f"{current_round.turn.name}님은 {current_round.temp_card} 카드를 버렸습니다.")
             await keep_hand(current_round)
-
+        elif str(payload.emoji) == "🅾️":
+            await current_game.main_channel.send(f"{current_round.turn.name}님이 베팅하기로 결정하셨습니다.")
+            await call(current_game, current_round)
+        elif str(payload.emoji) == "❎":
+            await current_game.main_channel.send(f"{current_round.turn.name}님이 베팅하지 않기로 결정하셨습니다.")
+            await fold(current_game, current_round)
 bot.run(token)

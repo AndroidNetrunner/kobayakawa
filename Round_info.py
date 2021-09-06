@@ -5,11 +5,11 @@ class Round_info:
         self.deck = self.shuffle_deck()
         self.hand = {}
         self.support_card = self.deck.pop()
-        self.tokens = {}
         self.survivors = self.judge_survivors(game_room)
         self.first_player = self.set_first_player(game_room)
         self.turn = self.first_player
         self.temp_card = None
+        self.caller = []
 
     def shuffle_deck(self):
         deck = list(range(1,16))
