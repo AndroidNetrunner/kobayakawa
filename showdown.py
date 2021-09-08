@@ -23,6 +23,7 @@ async def showdown(current_game, current_round):
         embed.add_field(name=f"이번 라운드의 승자는 {winner.name}님입니다!", value=f"{winner.name}님은 {len(current_round.caller) + 1}개의 칩을 획득하셨습니다.")
     await current_game.main_channel.send(embed=embed)
     current_game.current_round += 1
+    current_game.index_of_first_player = (current_game.index_of_first_player + 1) % len(current_game.members)
     await start_round(current_game)
     
 def judge_who_gets_support(current_round):

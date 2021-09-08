@@ -10,7 +10,8 @@ class Round_info:
         self.turn = self.first_player
         self.temp_card = None
         self.caller = []
-
+        self.main_channel = game_room.main_channel
+        
     def shuffle_deck(self):
         deck = list(range(1,16))
         random.shuffle(deck)

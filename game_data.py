@@ -8,5 +8,6 @@ class Game_data:
         self.can_join = False
         self.start = False
         self.main_channel = None
+        self.index_of_first_player = None
         
 active_game = {}
