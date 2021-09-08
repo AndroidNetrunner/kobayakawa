@@ -36,5 +36,12 @@ class Round_info:
         return first_player
         
     def next_turn(self):
-        index = self.survivors.index(self.turn)
-        self.turn = self.survivors[(index + 1) % len(self.survivors)]
+        if self.turn in self.survivors:
+            index = self.survivors.index(self.turn)
+            self.turn = self.survivors[(index + 1) % len(self.survivors)]
+        else:
+            index = self.members.index(self.turn)
+            self.turn = self.members[(index + 1) % len(self.members)]
+            while self.turn not in self.survivors:
+                index = (index + 1) % len(self.members)
+                self.turn = self.members[(index + 1) % len(self.members)]

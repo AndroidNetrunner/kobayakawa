@@ -14,8 +14,8 @@ async def end_game(game_room):
 def declare_winner(game_room):
     winner = []
     for player in game_room.members:
-        if (not winner) or game_room.chips[winner[0]] < game_room.chips(player):
+        if (not winner) or game_room.chips[winner[0]] < game_room.chips[player]:
             winner = [player]
-        elif game_room.chips[winner[0]] == game_room.chips(player):
+        elif game_room.chips[winner[0]] == game_room.chips[player]:
             winner.append(player)
     return winner

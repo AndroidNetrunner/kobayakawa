@@ -4,10 +4,12 @@ import random
 import discord
 
 async def start_round(game_room):
-    if game_room.current_round > 7:
-        end_game(game_room)
-        return 
+    if game_room.current_round > 6:
+        await end_game(game_room)
+        return
+    print(game_room.chips)
     current_round = Round_info(game_room)
+    print(current_round.survivors)
     game_room.round_info = current_round
     current_round.deal_cards()
     for survivor in current_round.survivors:
