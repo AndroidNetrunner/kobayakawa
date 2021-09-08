@@ -15,6 +15,8 @@ async def start_round(game_room):
     for survivor in current_round.survivors:
         embed = discord.Embed(title=f"{game_room.current_round + 1}라운드가 시작되었습니다!", description=f"당신의 카드는 {current_round.hand[survivor]}이며, 코바야카와 카드는 {current_round.support_card}입니다.")
         await survivor.send(embed=embed)
+    if current_round.turn not in current_round.survivors:
+        current_round.next_turn()
     await notify_turn(current_round)
     
 async def notify_turn(current_round):

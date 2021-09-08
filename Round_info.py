@@ -11,6 +11,7 @@ class Round_info:
         self.temp_card = None
         self.caller = []
         self.main_channel = game_room.main_channel
+        self.members = game_room.members
         
     def shuffle_deck(self):
         deck = list(range(1,16))
