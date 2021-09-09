@@ -22,3 +22,9 @@ def declare_winner(game_room):
     for player in winner:
         winner_name.append(player.name)
     return winner_name
+
+async def end_game_early(game_room, current_round):
+    sole_survivor = current_round.survivors[0]
+    embed = discord.Embed(title="게임이 모두 종료되었습니다.", description=f"{sole_survivor.name}님이 칩을 모두 획득하셨습니다!")
+    await game_room.main_channel.send(embed=embed)
+    del active_game[game_room.main_channel.channel.id]
