@@ -1,5 +1,5 @@
 from Round_info import Round_info
-from end_game import end_game
+from end_game import end_game, end_game_early
 import random
 import discord
 
@@ -7,9 +7,10 @@ async def start_round(game_room):
     if game_room.current_round > 6:
         await end_game(game_room)
         return
-    print(game_room.chips)
     current_round = Round_info(game_room)
-    print(current_round.survivors)
+    if len(current_round.survivors) == 1:
+        await end_game_early(game_room, current_round)
+        return
     game_room.round_info = current_round
     current_round.deal_cards()
     for survivor in current_round.survivors:
