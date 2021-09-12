@@ -4,7 +4,7 @@ import discord
 async def showdown(current_game, current_round):
     lowest = judge_who_gets_support(current_round)
     embed = discord.Embed(title="모든 플레이어가 베팅을 끝냈습니다.")
-    pot = len(current_round.caller) + 1 if current_game.current_round != 6 else len(current_round.caller) * 2 + 2
+    pot = len(current_round.caller) if current_game.current_round != 6 else len(current_round.caller) * 2
     if len(current_round.caller) == 0:
         embed.add_field(name="베팅에 참여한 플레이어가 존재하지 않습니다.", value="이번 라운드는 승자 없이 종료됩니다.")
     elif len(current_round.caller) == 1:

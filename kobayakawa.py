@@ -75,6 +75,18 @@ async def 마감(ctx):
     else:
         await ctx.send("현재 진행중인 게임이 없습니다.")
 
+@bot.command()
+async def 칩(ctx):
+    if ctx.channel.id not in active_game:
+        await ctx.send("시작한 게임이 존재하지 않습니다.")
+        return
+    current_game = active_game[ctx.channel.id]
+    if current_game.can_join != False:
+        await ctx.send("현재 게임이 참가 진행 중입니다.")
+        return
+    embed = discord.Embed(title="현재 플레이어들의 칩 개수는 다음과 같습니다.")
+    # 각 플레이어의 칩 상황을 embed의 field로 추가할 것
+    
 @bot.event
 async def on_raw_reaction_add(payload):
     current_game = None
@@ -83,7 +95,7 @@ async def on_raw_reaction_add(payload):
             if payload.user_id == member.id:
                 current_game = active_game[channel_id]
                 break
-    if not current_game:
+    if not current_game or not (current_game.start and not current_game.can_join):
         return
     current_round = current_game.round_info
     if payload.user_id == current_round.turn.id:
