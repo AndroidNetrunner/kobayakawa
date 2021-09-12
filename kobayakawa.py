@@ -84,8 +84,12 @@ async def 칩(ctx):
     if current_game.can_join != False:
         await ctx.send("현재 게임이 참가 진행 중입니다.")
         return
-    embed = discord.Embed(title="현재 플레이어들의 칩 개수는 다음과 같습니다.")
-    # 각 플레이어의 칩 상황을 embed의 field로 추가할 것
+    str_chips = ""
+    for player in current_game.members:
+        str_chips += f"{player.name}: {current_game.chips[player]}\n"
+    embed = discord.Embed(title="현재 플레이어들의 칩 개수는 다음과 같습니다.", description=str_chips)
+    await ctx.send(embed=embed)
+    # 각 플레이어의 칩 상황을 string으로 추가할 것
     
 @bot.event
 async def on_raw_reaction_add(payload):
