@@ -89,8 +89,18 @@ async def 칩(ctx):
         str_chips += f"{player.name}: {current_game.chips[player]}\n"
     embed = discord.Embed(title="현재 플레이어들의 칩 개수는 다음과 같습니다.", description=str_chips)
     await ctx.send(embed=embed)
-    # 각 플레이어의 칩 상황을 string으로 추가할 것
-    
+
+@bot.command()
+async def 순서(ctx):
+    if ctx.channel.id not in active_game:
+        await ctx.send("시작한 게임이 존재하지 않습니다.")
+        return
+    current_game = active_game[ctx.channel.id]
+    str_order = ""
+    for survivor in current_game.members:
+        str_order += f"{survivor.name} ->"
+    await ctx.send(str_order[:-3])
+
 @bot.event
 async def on_raw_reaction_add(payload):
     current_game = None
