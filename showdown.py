@@ -25,6 +25,10 @@ async def showdown(current_game, current_round):
         embed.add_field(name=f"이번 라운드의 승자는 {winner.name}님입니다!", value=f"{winner.name}님은 {pot}개의 칩을 획득하셨습니다.")
         current_game.chips[winner] += pot
     await current_game.main_channel.send(embed=embed)
+    for caller in current_round.caller:
+        if current_game.chips[caller] == 0:
+            await caller.send(f"현재 가지고 있는 칩이 0개입니다. 더 이상 게임에 참여하실 수 없습니다.")
+            await current_game.main_channel.send(f"{caller.name}님의 칩이 0개가 되어 게임에서 탈락하셨습니다.")
     current_game.current_round += 1
     current_game.index_of_first_player = (current_game.index_of_first_player + 1) % len(current_game.members)
     await start_round(current_game)
