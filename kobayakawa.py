@@ -67,6 +67,9 @@ async def 마감(ctx):
     if len(current_game.members) < 3:
     	await ctx.send("플레이어 수가 3명 미만입니다. 게임을 시작할 수 없습니다.")
     	return
+    if len(current_game.members) > 6:
+        await ctx.send("플레이어 수가 6명 초과입니다. 게임을 시작할 수 없습니다.")
+        return
     if current_game.can_join:
         current_game.can_join = False
         await ctx.send("참가가 마감되었습니다.")
