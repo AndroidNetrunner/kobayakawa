@@ -7,7 +7,7 @@
 ## 사용 방법
 ### 봇 초대방법
 
-<a href="https://bit.ly/38pCplR">여기</a>를 누르신 후, <b>본인이 관리하고 있는 디스코드 방</b>에 초대해주세요!
+<a href="https://discord.com/oauth2/authorize?client_id=884102643537043536&permissions=0&scope=bot">여기</a>를 누르신 후, <b>본인이 관리하고 있는 디스코드 방</b>에 초대해주세요!
 
 ### 명령어
 봇을 조종하기 위해서는 명령어를 사용하고, 모든 명령어는 '$'로 시작합니다.
