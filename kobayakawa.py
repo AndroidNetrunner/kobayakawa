@@ -122,8 +122,9 @@ async def on_raw_reaction_add(payload):
             await draw_hand(current_round)
             await current_game.main_channel.send(f"{current_round.turn.name}님이 덱에서 카드를 가져왔습니다.")
         elif str(payload.emoji) == "1\u20E3":
+            player_who_change_card = current_round.turn.name
             await draw_support_card(current_round)
-            await current_game.main_channel.send(f"{current_round.turn.name}님이 코바야카와 카드를 {current_round.support_card}로 변경하였습니다.")
+            await current_game.main_channel.send(f"{player_who_change_card}님이 코바야카와 카드를 {current_round.support_card}로 변경하였습니다.")
         elif str(payload.emoji) == "⭕":
             await current_game.main_channel.send(f"{current_round.turn.name}님은 {current_round.hand[current_round.turn]} 카드를 버렸습니다.")
             await change_hand(current_round)
