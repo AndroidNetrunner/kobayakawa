@@ -137,4 +137,7 @@ async def on_raw_reaction_add(payload):
         elif str(payload.emoji) == "❎":
             await current_game.main_channel.send(f"{current_round.turn.name}님이 베팅하지 않기로 결정하셨습니다.")
             await fold(current_game, current_round)
+        else:
+            return
+        await current_round.main_channel.send(f"현재 {current_round.turn.name}님의 차례입니다.")
 bot.run(token)
