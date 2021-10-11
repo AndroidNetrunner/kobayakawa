@@ -1,6 +1,6 @@
 import discord
 from showdown import showdown
-
+from start_round import notify_turn
 async def start_bet(current_round):
     embed = discord.Embed(title=f"이제 베팅을 결정하실 차례입니다!",description=f"손패의 카드는 {current_round.hand[current_round.turn]}이며, 코바야카와 카드는 {current_round.support_card}입니다.")
     embed.add_field(name="베팅에 참여하고 싶다면,", value=f"🅾️를 눌러주세요! 베팅을 위해서는 칩 1개가 소모됩니다.", inline=False)
@@ -8,7 +8,7 @@ async def start_bet(current_round):
     message = await current_round.turn.send(embed=embed)
     await message.add_reaction("🅾️")
     await message.add_reaction("❎")
-
+    
 async def call(current_game, current_round):
     current_round.caller.append(current_round.turn)
     await current_round.turn.send("베팅에 참여하기를 선택하셨습니다.")
@@ -16,6 +16,7 @@ async def call(current_game, current_round):
     current_round.next_turn()
     if current_round.turn != current_round.first_player:
         await start_bet(current_round)
+        await current_round.main_channel.send(f"현재 {current_round.turn.name}님의 차례입니다.")
     else:
         await showdown(current_game, current_round)
 
@@ -24,5 +25,6 @@ async def fold(current_game, current_round):
     current_round.next_turn()
     if current_round.turn != current_round.first_player:
         await start_bet(current_round)
+        await current_round.main_channel.send(f"현재 {current_round.turn.name}님의 차례입니다.")
     else:
         await showdown(current_game, current_round)

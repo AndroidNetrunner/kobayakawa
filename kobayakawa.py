@@ -125,12 +125,15 @@ async def on_raw_reaction_add(payload):
             player_who_change_card = current_round.turn.name
             await draw_support_card(current_round)
             await current_game.main_channel.send(f"{player_who_change_card}님이 코바야카와 카드를 {current_round.support_card}로 변경하였습니다.")
+            await current_round.main_channel.send(f"현재 {current_round.turn.name}님의 차례입니다.")
         elif str(payload.emoji) == "⭕":
             await current_game.main_channel.send(f"{current_round.turn.name}님은 {current_round.hand[current_round.turn]} 카드를 버렸습니다.")
             await change_hand(current_round)
+            await current_round.main_channel.send(f"현재 {current_round.turn.name}님의 차례입니다.")
         elif str(payload.emoji) == "❌":
             await current_game.main_channel.send(f"{current_round.turn.name}님은 {current_round.temp_card} 카드를 버렸습니다.")
             await keep_hand(current_round)
+            await current_round.main_channel.send(f"현재 {current_round.turn.name}님의 차례입니다.")
         elif str(payload.emoji) == "🅾️":
             await current_game.main_channel.send(f"{current_round.turn.name}님이 베팅하기로 결정하셨습니다.")
             await call(current_game, current_round)
@@ -139,5 +142,4 @@ async def on_raw_reaction_add(payload):
             await fold(current_game, current_round)
         else:
             return
-        await current_round.main_channel.send(f"현재 {current_round.turn.name}님의 차례입니다.")
 bot.run(token)

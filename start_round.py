@@ -18,6 +18,7 @@ async def start_round(game_room):
         await survivor.send(embed=embed)
     if current_round.turn not in current_round.survivors:
         current_round.next_turn()
+    await current_round.main_channel.send(f"{game_room.current_round + 1}라운드가 시작되었습니다!\n선 플레이어는 {current_round.first_player.name}입니다.")
     await notify_turn(current_round)
     
 async def notify_turn(current_round):
