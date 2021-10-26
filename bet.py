@@ -12,7 +12,9 @@ async def start_bet(current_round):
 async def call(current_game, current_round):
     current_round.caller.append(current_round.turn)
     await current_round.turn.send("베팅에 참여하기를 선택하셨습니다.")
-    current_game.chips[current_round.turn] -= 1 if current_game.current_round != 6 else 2
+    betting_chips = 1 if current_game.current_round != 6 or current_game.chips[current_round.turn] == 1 else 2
+    current_game.chips[current_round.turn] -= betting_chips
+    current_round.pot += betting_chips
     current_round.next_turn()
     if current_round.turn != current_round.first_player:
         await start_bet(current_round)

@@ -12,6 +12,7 @@ class Round_info:
         self.caller = []
         self.main_channel = game_room.main_channel
         self.members = game_room.members
+        self.pot = 0
         
     def shuffle_deck(self):
         deck = list(range(1,16))
